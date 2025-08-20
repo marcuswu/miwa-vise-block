@@ -64,7 +64,7 @@ func main() {
 	}
 
 	// Find lock recess surface
-	recessSurface := viseBlock.Shape().Faces().AlignedWith(cad.TopPlane).First(func(f *makercad.Face) bool {
+	recessSurface := viseBlock.Shape().Faces().AlignedWith(cad.TopPlane).FirstMatching(func(f *makercad.Face) bool {
 		return f.DistanceFrom(0, 0, blockHeight) == lockDepth
 	})
 
