@@ -1,0 +1,15 @@
+name: "Go Coverage"
+on:
+  pull_request:
+  push:
+    branches:
+      # It's important that the action also runs on merge to main
+      - main
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: marcuswu/makercad-action@v1
+      with:
+        entry: 'main.go'

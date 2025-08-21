@@ -78,7 +78,10 @@ func main() {
 		return
 	}
 
-	// Cut channels for wings on the back of the lock
+	// Design a channel for wings on the back of the lock
+	//  _____________
+	// /_____________\   Left and right sides are arcs to fit the lock recess
+	//
 	channel := struct {
 		outer float64
 		inner float64
@@ -89,31 +92,39 @@ func main() {
 		17., // guess
 	}
 	sketch := cad.Sketch(recessSurface)
+
+	// Set up initial geometry to be solved exactly later
 	l1 := sketch.Line(channel.width, channel.outer, -channel.width, channel.outer)
 	arc1 := sketch.Arc(0, 0, -channel.width, channel.outer, -channel.width, channel.inner)
 	l2 := sketch.Line(-channel.width, channel.inner, channel.width, channel.inner)
 	arc2 := sketch.Arc(0, 0, channel.width, channel.inner, channel.width, channel.outer)
 
+	// Make starts and ends coincident to ensure the profile is closed
 	arc2.End.Coincident(l1.Start)
 	l1.End.Coincident(arc1.Start)
 	arc1.End.Coincident(l2.Start)
 	l2.End.Coincident(arc2.Start)
 
+	// The arcs should match curvature with the lock recess, so center should be the same -- origin
 	arc1.Diameter(lockDia).Center.Coincident(sketch.Origin())
 	arc2.Diameter(lockDia).Center.Coincident(sketch.Origin())
 
+	// Lock the upper and lower lines to the horizontal
 	l1.Horizontal()
 	l2.Horizontal()
 
+	// Set the upper and lower line distances from origin
 	sketch.Origin().Distance(l1, channel.outer)
 	sketch.Origin().Distance(l2, channel.inner)
 
+	// Solve for the unknowns -- the start and end points of the arcs and lines
 	err = sketch.Solve()
 	if err != nil {
 		fmt.Println("Error solving sketch for lock wings")
 		return
 	}
 
+	// Export an image depicting the solved sketch in case we want to inspect it
 	sketch.ExportImage("sketcher.svg")
 
 	face1 := makercad.NewFace(sketch)
@@ -123,11 +134,17 @@ func main() {
 		return
 	}
 
-	mergeTo := makercad.ListOfShape{viseBlock.Shape()}
-	viseBlock = face1.ExtrudeMerging(-2, makercad.MergeTypeRemove, mergeTo.ToCascadeList())
+	viseBlock, err = face1.ExtrudeMerging(-2, makercad.MergeTypeRemove, makercad.ListOfShape{viseBlock.Shape()})
+	if err != nil {
+		fmt.Println("Error extruding upper lock wing channel")
+		return
+	}
 
-	mergeTo = makercad.ListOfShape{viseBlock.Shape()}
-	viseBlock = face2.ExtrudeMerging(2, makercad.MergeTypeRemove, mergeTo.ToCascadeList())
+	viseBlock, err = face2.ExtrudeMerging(2, makercad.MergeTypeRemove, makercad.ListOfShape{viseBlock.Shape()})
+	if err != nil {
+		fmt.Println("Error extruding lower lock wing channel")
+		return
+	}
 
 	// find faces to chamfer
 	allEdges := viseBlock.Shape().Faces().Edges()
@@ -153,7 +170,6 @@ func main() {
 	}
 
 	exports := makercad.ListOfShape{block}
-	// exports := makercad.ListOfShape{viseBlock.Shape()}
 	cad.ExportStl("miwa-lix-vise-block.stl", exports, makercad.QualityHigh)
 	cad.ExportStep("miwa-lix-vise-block.step", exports)
 }
