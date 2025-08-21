@@ -15,6 +15,6 @@ jobs:
       with:
         # default fetch-depth is insufficent to find previous coverage notes
         fetch-depth: 10
-    - uses: marcuswu/makercad-action@6c09743576172cf8bb0058fc289308fe51a01bcd
+    - uses: marcuswu/makercad-action@a9ca3c51a69e27826ba0eb56a24acd5192dfa748
       with:
         entry: 'main.go'
