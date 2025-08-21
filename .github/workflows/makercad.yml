@@ -1,4 +1,4 @@
-name: "Go Coverage"
+name: "MakerCAD build"
 on:
   pull_request:
   push:
