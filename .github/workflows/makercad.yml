@@ -14,3 +14,10 @@ jobs:
     - uses: marcuswu/makercad-action@eff5f295d47c2d048c95d0dec286700a9c7e7328
       with:
         entry: 'main.go'
+    - name: Collect build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: model-exports
+        path: |
+          *.stl
+          *.step
