@@ -5,6 +5,7 @@ on:
     branches:
       # It's important that the action also runs on merge to main
       - main
+  workflow_dispatch:
 
 jobs:
   build:
@@ -14,6 +15,6 @@ jobs:
       with:
         # default fetch-depth is insufficent to find previous coverage notes
         fetch-depth: 10
-    - uses: marcuswu/makercad-action@v2
+    - uses: marcuswu/makercad-action@v3
       with:
         entry: 'main.go'
