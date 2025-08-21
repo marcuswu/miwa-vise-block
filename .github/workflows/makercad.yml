@@ -11,6 +11,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: marcuswu/makercad-action@f786750eab5adcdd4a4a8e64bb3deeabf3750204
+    - uses: marcuswu/makercad-action@eff5f295d47c2d048c95d0dec286700a9c7e7328
       with:
         entry: 'main.go'
