@@ -11,10 +11,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-      with:
-        # default fetch-depth is insufficent to find previous coverage notes
-        fetch-depth: 10
-    - uses: marcuswu/makercad-action@a7d6ba69415d8bfd00734cde2b1eb015e9b466cc
+    - uses: marcuswu/makercad-action@2ae82e7ee65ba8a2dc612a9f51f0f078082e5faa
       with:
         entry: 'main.go'
