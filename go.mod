@@ -3,7 +3,7 @@ module github.com/marcuswu/miwa-lix-vise-block
 go 1.24.2
 
 require (
-	github.com/marcuswu/libmakercad v0.1.7
+	github.com/marcuswu/libmakercad v0.1.9
 	github.com/rs/zerolog v1.34.0
 )
 
