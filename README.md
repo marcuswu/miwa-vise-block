@@ -1,4 +1,9 @@
 # Miwa Vise Block
+
+<img src="images/image1.jpg" alt="Miwa Vise Block with attached lock" style="width:25%; height:auto;">
+<img src="images/image2.jpg" alt="Miwa Vise Block with detached lock" style="width:25%; height:auto;">
+<img src="images/image3.jpg" alt="Miwa Vise Block in vise" style="width:25%; height:auto;">
+
 This model was created for an easy way to mount a Japanese Miwa Lix style lock in a vise (for locksport).
 
 This model is also here to serve as an example model for [MakerCAD](https://github.com/marcuswu/makercad) and [MakerCAD's Github Action](https://github.com/marcuswu/makercad-action)
